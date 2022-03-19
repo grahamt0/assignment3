@@ -115,133 +115,176 @@ class _MyAppState extends State<MyApp> {
         body: SafeArea(
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                  'Sundae Maker',
-                  style: TextStyle(
-                    fontSize: 32.0,
-                  ),
-                ),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    DropdownButton(
-                      value: _currentSize,
-                      items: buildSizeMenu(),
-                      onChanged: (String? newValue) {
+                    Text(
+                      'Sundae Maker',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      '\$0.00',
+                      style: TextStyle(
+                        fontSize: 28.0,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        DropdownButton(
+                          value: _currentSize,
+                          items: buildSizeMenu(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _currentSize = newValue!;
+                            });
+                          },
+                        ),
+                        DropdownButton(
+                          value: _currentFlavor,
+                          items: buildFlavorMenu(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _currentFlavor = newValue!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CheckboxListTile(
+                            value: _peanuts,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Peanuts', val!);
+                            },
+                            title: Text('Peanuts'),
+                          ),
+                          CheckboxListTile(
+                            value: _almonds,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Almonds', val!);
+                            },
+                            title: Text('Almonds'),
+                          ),
+                          CheckboxListTile(
+                            value: _strawberries,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Strawberries', val!);
+                            },
+                            title: Text('Strawberries'),
+                          ),
+                          CheckboxListTile(
+                            value: _gummybears,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Gummy Bears', val!);
+                            },
+                            title: Text('Gummy Bears'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CheckboxListTile(
+                            value: _mandms,
+                            onChanged: (bool? val) {
+                              handleCheckBox('M&Ms', val!);
+                            },
+                            title: Text('M&Ms'),
+                          ),
+                          CheckboxListTile(
+                            value: _brownies,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Brownies', val!);
+                            },
+                            title: Text('Brownies'),
+                          ),
+                          CheckboxListTile(
+                            value: _oreos,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Oreos', val!);
+                            },
+                            title: Text('Oreos'),
+                          ),
+                          CheckboxListTile(
+                            value: _marshmallows,
+                            onChanged: (bool? val) {
+                              handleCheckBox('Marshmallows', val!);
+                            },
+                            title: Text('Marshmallows'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Slider(
+                      value: _sliderValue.toDouble(),
+                      min: 0.0,
+                      max: 3.0,
+                      label: _sliderValue.toString(),
+                      divisions: 3,
+                      onChanged: (double val) {
                         setState(() {
-                          _currentSize = newValue!;
+                          _sliderValue = val.toInt();
                         });
                       },
                     ),
-                    DropdownButton(
-                      value: _currentFlavor,
-                      items: buildFlavorMenu(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _currentFlavor = newValue!;
-                        });
-                      },
-                    ),
-                  ]
+                  ],
                 ),
-                CheckboxListTile(
-                  value: _peanuts,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Peanuts', val!);
-                  },
-                  title: Text('Peanuts'),
-                ),
-                CheckboxListTile(
-                  value: _almonds,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Almonds', val!);
-                  },
-                  title: Text('Almonds'),
-                ),
-                CheckboxListTile(
-                  value: _strawberries,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Strawberries', val!);
-                  },
-                  title: Text('Strawberries'),
-                ),
-                CheckboxListTile(
-                  value: _gummybears,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Gummy Bears', val!);
-                  },
-                  title: Text('Gummy Bears'),
-                ),
-                CheckboxListTile(
-                  value: _mandms,
-                  onChanged: (bool? val) {
-                    handleCheckBox('M&Ms', val!);
-                  },
-                  title: Text('M&Ms'),
-                ),
-                CheckboxListTile(
-                  value: _brownies,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Brownies', val!);
-                  },
-                  title: Text('Brownies'),
-                ),
-                CheckboxListTile(
-                  value: _oreos,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Oreos', val!);
-                  },
-                  title: Text('Oreos'),
-                ),
-                CheckboxListTile(
-                  value: _marshmallows,
-                  onChanged: (bool? val) {
-                    handleCheckBox('Marshmallows', val!);
-                  },
-                  title: Text('Marshmallows'),
-                ),
-                Slider(
-                  value: _sliderValue.toDouble(),
-                  min: 0.0,
-                  max: 3.0,
-                  label: _sliderValue.toString(),
-                  divisions: 3,
-                  onChanged: (double val) {
-                    setState(() {
-                      _sliderValue = val.toInt();
-                    });
-                  }
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
                         onPressed: () {  },
                         child: Text('The Works',
                           style: TextStyle(
                             fontSize: 22.0,
                           ),
                         )
-                      ),
-                      TextButton(
+                    ),
+                    TextButton(
                         onPressed: () {  },
                         child: Text('Reset',
                           style: TextStyle(
                             fontSize: 22.0,
                           ),
                         )
+                    ),
+                    TextButton(
+                      onPressed: () {  },
+                      child: Text('Order',
+                        style: TextStyle(
+                          fontSize: 22.0,
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () {  },
-                        child: Text('Order',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                          ),
-                        )
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
