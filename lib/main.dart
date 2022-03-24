@@ -20,11 +20,18 @@ class _MyAppState extends State<MyApp> {
   var _brownies = false;
   var _oreos = false;
   var _marshmallows = false;
-  var _sliderValue = 2;
+  var _sliderValue = 1;
   var _currentSize = "Small";
   var _sizes = ['Small', 'Medium', 'Large'];
   var _currentFlavor = "Vanilla";
   var _flavors = ['Vanilla', 'Chocolate', 'Strawberry'];
+
+  var fudge_label = "1 oz";
+  var total = 0.00;
+  var size_cost = 2.99;
+  var toppings_cost = 0.00;
+  var fudge_cost = 0.15;
+  var total_dollars = "";
 
   void handleCheckBox(String name, bool value) {
     setState(() {
@@ -54,6 +61,103 @@ class _MyAppState extends State<MyApp> {
           _marshmallows = value;
           break;
       }
+      updateUI();
+    });
+  }
+
+  void updateUI() {
+    setState(() {
+      fudge_cost = 0.00;
+      switch (_sliderValue) {
+        case 0:
+          fudge_label = "0 oz";
+          fudge_cost = 0.00;
+          break;
+        case 1:
+          fudge_label = "1 oz";
+          fudge_cost = 0.15;
+          break;
+        case 2:
+          fudge_label = "2 oz";
+          fudge_cost = 0.25;
+          break;
+        case 3:
+          fudge_label = "3 oz";
+          fudge_cost = 0.30;
+          break;
+      }
+      size_cost = 0.00;
+      switch (_currentSize) {
+        case "Small":
+          size_cost = 2.99;
+          break;
+        case "Medium":
+          size_cost = 3.99;
+          break;
+        case "Large":
+          size_cost = 4.99;
+          break;
+      }
+      toppings_cost = 0.00;
+      if (_peanuts) {
+        toppings_cost += 0.15;
+      }
+      if (_almonds) {
+        toppings_cost += 0.15;
+      }
+      if (_strawberries) {
+        toppings_cost += 0.20;
+      }
+      if (_gummybears) {
+        toppings_cost += 0.20;
+      }
+      if (_mandms) {
+        toppings_cost += 0.25;
+      }
+      if (_brownies) {
+        toppings_cost += 0.20;
+      }
+      if (_oreos) {
+        toppings_cost += 0.20;
+      }
+      if (_marshmallows) {
+        toppings_cost += 0.15;
+      }
+      total = size_cost + toppings_cost + fudge_cost;
+      total_dollars = total.toString();
+    });
+  }
+  // should have everything
+  void theWorks() {
+    setState(() {
+      _currentSize = "Large";
+      _sliderValue = 3;
+      _peanuts = true;
+      _almonds = true;
+      _strawberries = true;
+      _gummybears = true;
+      _mandms = true;
+      _brownies = true;
+      _oreos = true;
+      _marshmallows = true;
+      updateUI();
+    });
+  }
+  //should have everything
+  void reset() {
+    setState(() {
+      _currentFlavor = "Vanilla";
+      _currentSize = "Small";
+      _sliderValue = 1;
+      _peanuts = false;
+      _almonds = false;
+      _strawberries = false;
+      _gummybears = false;
+      _mandms = false;
+      _brownies = false;
+      _oreos = false;
+      _marshmallows = false;
+      updateUI();
     });
   }
 
@@ -132,7 +236,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      '\$0.00',
+                      total_dollars,
                       style: TextStyle(
                         fontSize: 28.0,
                       ),
@@ -151,6 +255,8 @@ class _MyAppState extends State<MyApp> {
                           onChanged: (String? newValue) {
                             setState(() {
                               _currentSize = newValue!;
+                              //just added
+                              updateUI();
                             });
                           },
                         ),
@@ -243,6 +349,12 @@ class _MyAppState extends State<MyApp> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    Text(
+                      "Hot Fudge",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
                     Slider(
                       value: _sliderValue.toDouble(),
                       min: 0.0,
@@ -252,8 +364,16 @@ class _MyAppState extends State<MyApp> {
                       onChanged: (double val) {
                         setState(() {
                           _sliderValue = val.toInt();
+                          //just added
+                          updateUI();
                         });
                       },
+                    ),
+                    Text(
+                      fudge_label,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
                     ),
                   ],
                 ),
@@ -261,7 +381,9 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                        onPressed: () {  },
+                        onPressed: () {
+                          theWorks();
+                        },
                         child: Text('The Works',
                           style: TextStyle(
                             fontSize: 22.0,
@@ -269,7 +391,9 @@ class _MyAppState extends State<MyApp> {
                         )
                     ),
                     TextButton(
-                        onPressed: () {  },
+                        onPressed: () {
+                          reset();
+                        },
                         child: Text('Reset',
                           style: TextStyle(
                             fontSize: 22.0,
